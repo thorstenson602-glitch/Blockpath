@@ -1,0 +1,6 @@
+{
+    "address": "bc1qy6qaq422rn3anrtjdxdjqzuj6pq2d20yt77c0t",
+    "scriptpubkey": "00142681d0554a1ce3d98d72699b200b92d040a6a9e4",
+    "type": "P2WPKH",
+    "outputs": []
+}

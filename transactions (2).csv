@@ -1,0 +1,11 @@
+Transaction Hash,Sender,Receiver,Gas Used,Status,Type,MEV Profit
+0xe95e310ba7...,0xd75e6a8e,0x2ab98878,25971,confirmed,arbitrage,157.22351913956723
+0x362226c487...,0xa713af26,0x50084c25,53094,confirmed,arbitrage,203.75254479200777
+0xc5b0dc0f63...,0x97a5fa76,0xc268a79f,60589,confirmed,swap,613.196471528926
+0xceef3efa7d...,0x4ca0f453,0x24c9f7f5,35847,confirmed,arbitrage,57.32103304075442
+0x4e87efd6a4...,0x6bd1207f,0xed3c0a1f,58194,confirmed,liquidation,370.5942555033984
+0xc71adb5e59...,0x4439f8e5,0x640a3151,25641,failed,arbitrage,936.1547180698572
+0xce89f806d3...,0xd37f069a,0x0a21be25,42039,failed,arbitrage,479.89601628267854
+0x875e76d796...,0xac682d51,0x7a2456a5,59482,confirmed,liquidation,279.3365861471089
+0xb3a6f1f880...,0xd6671f24,0x6bbbedce,54631,confirmed,arbitrage,974.6929248942573
+0x9c1ba42f18...,0xc8b570f9,0x8d506a42,47280,confirmed,arbitrage,982.8537132850788
