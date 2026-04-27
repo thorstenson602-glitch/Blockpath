@@ -405,11 +405,32 @@ class Account(Thing):
     @classmethod
     def _by_name(cls, name, allow_deleted = False, _update = False):
         #lower name here so there is only one cache
-        uid = cls._by_name_cache(name.lower(), allow_deleted, _update = _update)
-        if uid:
-            return cls._byID(uid, data=True)
+        names, single = tup(name, ret_is_single=True)
+
+        uids = {}
+        for n in names:
+            uid = cls._by_name_cache(n.lower(), allow_deleted, _update = _update)
+            if uid:
+                uids[n] = uid
+
+        if not uids:
+            if single:
+                raise NotFound('Account %s' % names[0])
+            else:
+                return {}
+
+        accounts = cls._byID(uids.values(), data=True)
+        ret = {n: accounts[uid] for n, uid in uids.items() if uid in accounts}
+
+        if single:
+            # use a list to be compatible with both Python 2 and 3
+            res = list(ret.values())
+            if res:
+                return res[0]
+            else:
+                raise NotFound('Account %s' % names[0])
         else:
-            raise NotFound, 'Account %s' % name
+            return ret
 
     @classmethod
     def _names_to_ids(cls, names, ignore_missing=False, allow_deleted=False,

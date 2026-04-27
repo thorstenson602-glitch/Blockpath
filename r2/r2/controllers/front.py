@@ -652,13 +652,7 @@ class FrontController(RedditController):
                 modnames = g.admins
             else:
                 modnames = self.modname_splitter.split(mod)
-            mod = []
-            for name in modnames:
-                try:
-                    mod.append(Account._by_name(name, allow_deleted=True))
-                except NotFound:
-                    continue
-            mod = mod or None
+            mod = list(Account._by_name(modnames, allow_deleted=True).values()) or None
 
         if isinstance(c.site, (MultiReddit, ModSR)):
             srs = Subreddit._byID(c.site.sr_ids, return_dict=False)
