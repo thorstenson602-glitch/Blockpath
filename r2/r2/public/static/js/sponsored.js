@@ -1239,7 +1239,7 @@ var exports = r.sponsored = {
                                    'androidVersionRange',];
 
             platformTargetsList.forEach(function(platformStr) {
-              targets[platformStr] = eval(platformStr)
+              targets[platformStr] = platformTargets[platformStr]
             });
 
             targets['inventoryKey'] = this.get_inventory_key(sr, collection, geotarget, platform);
