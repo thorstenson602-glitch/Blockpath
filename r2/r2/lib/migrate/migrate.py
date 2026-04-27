@@ -77,23 +77,20 @@ def recompute_unread(min_date = None):
 
         return accounts
 
-    from r2.lib.utils import in_chunks
     accounts_m = load_accounts(Inbox.rel(Account, Message))
-    for i, chunk in enumerate(in_chunks(accounts_m, 100)):
-        accounts = Account._byID(chunk, data=True, return_dict=False)
-        for j, a in enumerate(accounts):
-            print "%s / %s : %s" % (i * 100 + j, len(accounts_m), a)
-            queries.get_unread_messages(a).update()
-            queries.get_unread_comments(a).update()
-            queries.get_unread_selfreply(a).update()
+    for i, a in enumerate(accounts_m):
+        a = Account._byID(a)
+        print "%s / %s : %s" % (i, len(accounts_m), a)
+        queries.get_unread_messages(a).update()
+        queries.get_unread_comments(a).update()
+        queries.get_unread_selfreply(a).update()
 
-    accounts_remaining = load_accounts(Inbox.rel(Account, Comment)) - accounts_m
-    for i, chunk in enumerate(in_chunks(accounts_remaining, 100)):
-        accounts = Account._byID(chunk, data=True, return_dict=False)
-        for j, a in enumerate(accounts):
-            print "%s / %s : %s" % (i * 100 + j, len(accounts_remaining), a)
-            queries.get_unread_comments(a).update()
-            queries.get_unread_selfreply(a).update()
+    accounts = load_accounts(Inbox.rel(Account, Comment)) - accounts_m
+    for i, a in enumerate(accounts):
+        a = Account._byID(a)
+        print "%s / %s : %s" % (i, len(accounts), a)
+        queries.get_unread_comments(a).update()
+        queries.get_unread_selfreply(a).update()
 
 
 
