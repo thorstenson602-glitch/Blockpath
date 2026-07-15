@@ -287,6 +287,7 @@ class Globals(object):
             'multi_icons',
             'hide_subscribers_srs',
             'mcrouter_addr',
+            'local_networks',
         ],
 
         ConfigValue.tuple_of(ConfigValue.int): [
@@ -529,6 +530,9 @@ class Globals(object):
             xml="xml",
             json="json",
         )
+
+        local_networks = self.config.get("local_networks", [])
+        self.local_networks = [ipaddress.ip_network(n) for n in local_networks]
 
         ################# Blockpath Global Variables
         #self.bp = {}
