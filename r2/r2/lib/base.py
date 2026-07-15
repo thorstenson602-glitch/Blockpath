@@ -29,6 +29,7 @@ from webob.exc import HTTPException, status_map
 from r2.lib.filters import spaceCompress, _force_unicode
 from r2.lib.template_helpers import get_domain
 from r2.lib.utils import Agent
+from r2.lib.contrib import ipaddress
 from utils import string2js, read_http_date
 
 import re, hashlib
@@ -45,8 +46,28 @@ logging.getLogger('scgi-wsgi').setLevel(logging.CRITICAL)
 
 
 def is_local_address(ip):
-    # TODO: support the /20 and /24 private networks? make this configurable?
-    return ip.startswith('10.') or ip == "127.0.0.1"
+    try:
+        addr = ipaddress.ip_address(_force_unicode(ip))
+    except (ValueError, ipaddress.AddressValueError):
+        return False
+
+    if addr.is_loopback:
+        return True
+
+    # if we have g.local_networks, check against those
+    try:
+        local_networks = g.local_networks
+    except (NameError, AttributeError):
+        local_networks = None
+
+    if local_networks:
+        for network in local_networks:
+            if addr in network:
+                return True
+        return False
+
+    # standard RFC 1918 private networks
+    return addr.is_private
 
 def abort(code_or_exception=None, detail="", headers=None, comment=None,
           **kwargs):
